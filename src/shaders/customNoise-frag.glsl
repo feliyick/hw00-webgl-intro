@@ -23,7 +23,6 @@ in vec4 fs_Pos;
 out vec4 out_Col; // This is the final output color that you will see on your
                   // screen for the pixel that is currently being processed.
 
-
 vec3 random3 ( vec3 p ) {
     return fract(sin(vec3(dot(p,vec3(127.1, 311.7, 288.99)),
                           dot(p,vec3(303.1, 183.3, 800.2)),
