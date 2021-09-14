@@ -40,26 +40,16 @@ void main()
     fs_Col = vs_Col;                         // Pass the vertex colors to the fragment shader for interpolation
     mat3 invTranspose = mat3(u_ModelInvTr);
     fs_Nor = vec4(invTranspose * vec3(vs_Nor), 0);          // Pass the vertex normals to the fragment shader for interpolation.
-    //                                                         // Transform the geometry's normals by the inverse transpose of the
-    //                                                         // model matrix. This is necessary to ensure the normals remain
-    //                                                         // perpendicular to the surface after the surface is transformed by
-    //                                                         // the model matrix.
-
-
-    // vec4 modelposition = u_Model * vs_Pos;   // Temporarily store the transformed vertex positions for use below
-
     
-    // gl_Position = u_ViewProj * modelposition;// gl_Position is a built-in variable of OpenGL which is
-    // //                                          // used to render the final positions of the geometry's vertices
-
-    // fs_Nor = normalize(u_ModelInvTr * vec3(vs_Nor));
-    vec3 normPos = normalize(vs_Pos.xyz) * 2.0;
+    vec3 normPos = normalize(vs_Pos.xyz) + sin(0.001 * float(u_Time)) * cos(0.01 * float(u_Time));
     vec4 modelposition = u_Model * vec4(normPos, 1);
-    vec4 modelOriginal = u_Model * vs_Pos;
+    vec4 modPos = vs_Pos;
+
+    modPos.y += pow(sin((modelposition.y * 8.f + float(u_Time) * 0.02)), 2.0);
+    modPos.z += cos((modelposition.y * 10.f + float(u_Time) * 0.02));
+
+    vec4 modelOriginal = u_Model * modPos;
     fs_LightVec = lightPos - modelposition;  // Compute the direction in which the light source lies
     fs_Pos = mix(modelposition, modelOriginal, sin(float(u_Time)  * 0.01));
     gl_Position = u_ViewProj * fs_Pos;
-
-
-    // fs_LightVec = ((inverse(u_View) * vec4(0,0,0,1)) - modelposition).xyz;  // Compute the direction in which the light source lies
 }

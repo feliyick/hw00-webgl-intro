@@ -116,9 +116,9 @@ function main() {
     customNoise.setTime(time);
     time++;
     renderer.render(camera, customNoise, [
-      icosphere,
+      // icosphere,
       // square,
-      // cube
+      cube
     ]);
 
     stats.end();
