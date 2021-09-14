@@ -14,7 +14,7 @@ import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 const controls = {
   tesselations: 5,
   'Load Scene': loadScene, // A function pointer, essentially
-  palette: [255, 255, 255]
+  palette: [242, 146, 146]
 };
 
 let icosphere: Icosphere;
@@ -64,7 +64,7 @@ function main() {
   const camera = new Camera(vec3.fromValues(0, 0, 5), vec3.fromValues(0, 0, 0));
 
   const renderer = new OpenGLRenderer(canvas);
-  renderer.setClearColor(0.2, 0.2, 0.2, 1);
+  renderer.setClearColor(0.6, 0.78, 0.87, 1.0);
   gl.enable(gl.DEPTH_TEST);
 
   const lambert = new ShaderProgram([
@@ -76,6 +76,9 @@ function main() {
     new Shader(gl.VERTEX_SHADER, require('./shaders/customNoise-vert.glsl')),
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/customNoise-frag.glsl')),
   ]);
+
+  // initial overlay colour
+  customNoise.setGeometryColor(vec4.fromValues(0.94, 0.57, 0.57, 1.0))
 
 
   // This function will be called every frame
