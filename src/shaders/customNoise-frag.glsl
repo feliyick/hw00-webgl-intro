@@ -83,7 +83,6 @@ void main()
         float lightIntensity = max(diffuseTerm, 0.0);   //Add a small float value to the color multiplier
                                                             //to simulate ambient lighting. This ensures that faces that are not
                                                             //lit by our point light are not completely black.
-
         lightIntensity += ambientTerm;
         // Compute final shaded color
         out_Col = vec4(diffuseColor.rgb * lightIntensity, diffuseColor.a);
